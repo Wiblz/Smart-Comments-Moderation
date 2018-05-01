@@ -66,10 +66,10 @@ def main():
         results = get_top_level_comments(service, video_id, next_page_token)
         next_page_token = results["nextPageToken"]
 
-        data = construct_data_frame(results)
+        data = construct_data_frame(results, comments_processed)
         comments_processed += data.shape[0]
         print("\r", comments_processed, " comments processed.", sep="", end="\r")
-        data.to_csv(output, mode="a", header=(i == 0), index=False)
+        data.to_csv(output, mode="a", header=(i == 0))
 
     print("\nSuccess.")
 
