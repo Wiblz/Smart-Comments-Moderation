@@ -1,3 +1,4 @@
+from properties import load_properties, save_properties
 import pandas as pd
 import sys
 from googleapiclient.discovery import build
@@ -58,8 +59,10 @@ def main():
     video_id = sys.argv[1]
     output = sys.argv[2]
     service = init_service()
+    properties = load_properties()
 
-    comments_processed = 0
+    initial_comment_number = properties["comments_received"]
+    comments_processed = initial_comment_number
     next_page_token = None
 
     for i in range(MAX_PAGES):
@@ -68,8 +71,12 @@ def main():
 
         data = construct_data_frame(results, comments_processed)
         comments_processed += data.shape[0]
-        print("\r", comments_processed, " comments processed.", sep="", end="\r")
-        data.to_csv(output, mode="a", header=(i == 0))
+        properties["comments_received"] = comments_processed
+        save_properties(properties)
+
+        print("\r", comments_processed - initial_comment_number, " more comments processed. In total: ",
+              comments_processed, sep="", end="\r")
+        data.to_csv(output, mode="a", header=(comments_processed == 0))
 
     print("\nSuccess.")
 
