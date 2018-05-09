@@ -1,9 +1,11 @@
-from properties import load_properties, save_properties
 import pandas as pd
+import properties as prop
 import sys
 from googleapiclient.discovery import build
 
-# https://www.youtube.com/watch?v=NprjXgs5IK8 - Logan Paul
+# NprjXgs5IK8 - Logan Paul
+# x3zQELlrY6A - BuzzFeed
+# bK0TEqDtkK4 - Ghost Pepper: Day 2
 MAX_PAGES = 5
 
 
@@ -59,9 +61,8 @@ def main():
     video_id = sys.argv[1]
     output = sys.argv[2]
     service = init_service()
-    properties = load_properties()
 
-    initial_comment_number = properties["comments_received"]
+    initial_comment_number = prop.load_comments_number(output)
     comments_processed = initial_comment_number
     next_page_token = None
 
@@ -71,12 +72,11 @@ def main():
 
         data = construct_data_frame(results, comments_processed)
         comments_processed += data.shape[0]
-        properties["comments_received"] = comments_processed
-        save_properties(properties)
+        prop.save_comments_number(output, comments_processed)
 
         print("\r", comments_processed - initial_comment_number, " more comments processed. In total: ",
               comments_processed, sep="", end="\r")
-        data.to_csv(output, mode="a", header=(comments_processed == 0))
+        data.to_csv("data/" + output, mode="a", header=(comments_processed == 0))
 
     print("\nSuccess.")
 

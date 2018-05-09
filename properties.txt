@@ -1,1 +1,1 @@
-{"comments_received": 583, "comments_classified": 392, "comments_skipped": 10}
+{"comments_classified": 569, "output.csv": {"comments_number": 583, "comments_processed": 583}, "buzz.csv": {"comments_number": 507, "comments_processed": 0}, "mark.csv": {"comments_number": 506, "comment_processed": 0}, "pewds.csv": {"comments_number": 516, "comment_processed": 0}, "fortnite.csv": {"comments_number": 519, "comment_processed": 0}, "minaj.csv": {"comments_number": 527, "comment_processed": 0}}
