@@ -36,7 +36,7 @@ def save_comments_number(filename, number):
         if filename in file_data:
             file_data[filename]["comments_number"] = number
         else:
-            file_data[filename] = {"comments_number": number, "comment_processed": 0}
+            file_data[filename] = {"comments_number": number, "comments_processed": 0}
         p.seek(0)
         p.write(json.dumps(file_data))
         p.truncate()

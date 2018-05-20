@@ -71,12 +71,13 @@ def main():
         next_page_token = results["nextPageToken"]
 
         data = construct_data_frame(results, comments_processed)
+        data.to_csv("data/" + output, mode="a", header=(comments_processed == 0))
+
         comments_processed += data.shape[0]
         prop.save_comments_number(output, comments_processed)
 
         print("\r", comments_processed - initial_comment_number, " more comments processed. In total: ",
               comments_processed, sep="", end="\r")
-        data.to_csv("data/" + output, mode="a", header=(comments_processed == 0))
 
     print("\nSuccess.")
 
