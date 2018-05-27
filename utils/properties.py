@@ -2,7 +2,6 @@ import json
 
 
 def save_classification_data(filename, comments_classified, comments_processed):
-    """Save updated data to 'properties.txt' as a json."""
     with open("properties.txt", mode="r+") as p:
         file_data = json.loads(p.read())
         file_data["comments_classified"] = comments_classified
@@ -12,17 +11,12 @@ def save_classification_data(filename, comments_classified, comments_processed):
         p.truncate()
 
 
-def load_classification_data(filename):
-    """
-
-    :param filename:
-    :return:
-    """
+def load_classification_data(filename=None):
     try:
         with open("properties.txt") as p:
             file_data = json.loads(p.read())
 
-            if filename in file_data:
+            if filename is not None and filename in file_data:
                 return file_data["comments_classified"], file_data[filename]["comments_processed"]
             else:
                 return file_data["comments_classified"], 0

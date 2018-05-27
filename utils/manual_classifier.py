@@ -1,5 +1,5 @@
 import pandas as pd
-import properties as prop
+import utils.properties as prop
 
 
 def save(output, data, rows_classified):
@@ -15,13 +15,12 @@ def save(output, data, rows_classified):
 
 
 def main():
-    # source = sys.argv[1]
     source = "minaj.csv"
     output = "classified.csv"
     classified_data = []
     rows_classified, rows_processed = prop.load_classification_data(source)
 
-    for chunk in pd.read_csv("data/" + source, iterator=True, chunksize=100):
+    for chunk in pd.read_csv("../data/" + source, iterator=True, chunksize=100):
         if chunk.index[-1] < rows_processed:
             continue
         for index, row in chunk.iterrows():
